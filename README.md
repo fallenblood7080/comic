@@ -1,3 +1,3 @@
-# comic
+# Simple Comic Flutter App
 
-A new Flutter project.
+it fetches the comic from [xkcd](https://xkcd.com/about/)
