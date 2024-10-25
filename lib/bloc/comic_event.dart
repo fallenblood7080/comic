@@ -5,7 +5,21 @@ sealed class ComicEvent {}
 
 class GetComicInitialEvent extends ComicEvent {}
 
-class GetComicEvent extends ComicEvent {
+class FetchComicFromInternet extends ComicEvent {
   List<int> comicNums;
-  GetComicEvent(this.comicNums);
+  FetchComicFromInternet(this.comicNums);
+}
+class FetchComicFavourite extends ComicEvent {}
+
+class AddComicFavourite extends ComicEvent {
+  ComicDataModel comicDataModel;
+  AddComicFavourite(this.comicDataModel);
+}
+class RemoveComicFavourite extends ComicEvent {
+  int comicNum;
+  RemoveComicFavourite(this.comicNum);
+}
+class CheckComicFavourite extends ComicEvent {
+  int comicNum;
+  CheckComicFavourite(this.comicNum);
 }

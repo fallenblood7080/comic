@@ -16,7 +16,7 @@ class ComicDataModel {
       this.img,
       this.title});
 
-  ComicDataModel.fromJson(Map<String, dynamic> json) {
+  ComicDataModel.fromJson(Map<dynamic, dynamic> json) {
     num = json['num'];
     day = json['day'];
     month = json['month'];
@@ -26,8 +26,8 @@ class ComicDataModel {
     title = json['title'];
   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
+  Map<dynamic, dynamic> toJson() {
+    final Map<dynamic, dynamic> data = <dynamic, dynamic>{};
     data['num'] = num;
     data['day'] = day;
     data['month'] = month;

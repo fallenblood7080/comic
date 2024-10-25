@@ -14,5 +14,8 @@ class ComicFailure extends ComicState {
   ComicFailure({required this.message});
 }
 
+class FavExist extends ComicState {}
+class FavNotExist extends ComicState {}
+
 
 

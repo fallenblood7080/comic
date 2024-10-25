@@ -1,26 +1,67 @@
-import 'package:comic/Model/comic_data_model.dart';
 import 'package:comic/bloc/comic_bloc.dart';
 import 'package:comic/comic_page.dart';
+import 'package:comic/fav_comic.dart';
 import 'package:comic/theme.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
-void main() {
-  runApp(MainApp());
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Hive.initFlutter();
+
+  await Hive.openBox("favBox");
+
+  runApp(const MainApp());
 }
 
-class MainApp extends StatelessWidget {
-  MainApp({super.key});
+class MainApp extends StatefulWidget {
+  const MainApp({super.key});
 
-  List<ComicDataModel> comicList = List.empty(growable: true);
-  ComicBloc comicBloc = ComicBloc();
+  @override
+  State<MainApp> createState() => _MainAppState();
+}
+
+class _MainAppState extends State<MainApp> {
+  int navIndex = 0;
+
+  ComicBloc comicInternet = ComicBloc();
+  ComicBloc comicFav = ComicBloc();
+
+  List<Widget> pages = [];
+  
+  @override
+  void initState() {
+    pages.add(Comic(comicBloc: comicInternet,));
+    pages.add(FavouriteComic(bloc: comicFav));
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Comic(comicBloc: comicBloc, comicList: comicList),
+      home: Scaffold(
+        bottomNavigationBar: BottomNavigationBar(items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+          BottomNavigationBarItem(icon: Icon(Icons.favorite), label: "Favorite")
+        ],
+        onTap: (index){
+          setState(() {
+            navIndex = index;
+            if(index == 1){
+              comicFav.add(FetchComicFavourite());
+            }
+          });
+        },
+        currentIndex: navIndex,
+        ),
+        
+        body: IndexedStack(
+          index: navIndex,
+          children: pages,
+        )
+      ),
       theme: AppThemes.lightTheme,
     );
   }
 }
-

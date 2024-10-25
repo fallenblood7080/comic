@@ -4,33 +4,25 @@ import 'package:comic/comic_page_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-// ignore: must_be_immutable
-class Comic extends StatelessWidget {
-  Comic({
-    super.key,
-    required this.comicBloc,
-  });
-
-  List<ComicDataModel> comicList = List.empty(growable: true);
-  ComicBloc comicBloc;
-
-
+class FavouriteComic extends StatelessWidget {
+  FavouriteComic({super.key,required this.bloc});
+  ComicBloc bloc;
+  List<ComicDataModel> comicList = [];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text("xkcd Comics"),
-        ),
-        body: Padding(
+      appBar: AppBar(
+        title: const Text('Favourite Comics'),
+      ),
+      body: Padding(
           padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
           child: BlocProvider(create: (context) {
-            comicBloc = ComicBloc();
-            comicBloc.add(GetComicInitialEvent());
-            return comicBloc;
+            bloc.add(FetchComicFavourite());
+            return bloc;
           }, child: BlocBuilder<ComicBloc, ComicState>(
             builder: (context, state) {
               if (state is ComicSuccess) {
-                comicList.addAll(state.comics);
+                comicList = state.comics;
                 return SizedBox(
                   child: ComicPageView(
                       comicList: comicList,),
@@ -49,6 +41,7 @@ class Comic extends StatelessWidget {
               }
             },
           )),
-        ));
+        ),
+    );
   }
 }

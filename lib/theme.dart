@@ -10,4 +10,14 @@ class AppThemes {
       color: Colors.black
     ),
     dividerColor: Colors.black87,
+    appBarTheme: const AppBarTheme(
+      backgroundColor: Colors.black,
+     titleTextStyle: TextStyle(color: Colors.white,fontSize: 20),
+    ),
+    bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+      backgroundColor: Colors.black,
+      selectedItemColor: Colors.white,
+      unselectedItemColor: Colors.white54,
+      
+    )
   );}
