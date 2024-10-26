@@ -25,13 +25,14 @@ class FavouriteComic extends StatelessWidget {
                 comicList = state.comics;
                 return SizedBox(
                   child: ComicPageView(
-                      comicList: comicList,),
+                      comicList: comicList,
+                      isFavPage: true,),
                 );
               } else if (state is ComicFailure) {
-                return const Center(
+                return Center(
                   child: Text(
-                    "Something went Wrong",
-                    style: TextStyle(fontSize: 18),
+                    state.message,
+                    style: const TextStyle(fontSize: 18),
                   ),
                 );
               } else {
